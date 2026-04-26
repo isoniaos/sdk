@@ -1,0 +1,34 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    dependencies:
+      '@isonia/types':
+        specifier: github:isoniaos/types#v0.1.0
+        version: https://codeload.github.com/isoniaos/types/tar.gz/0c65ea23a209b0945876b63ccabc71a40c49ac32
+    devDependencies:
+      typescript:
+        specifier: 5.7.3
+        version: 5.7.3
+
+packages:
+
+  '@isonia/types@https://codeload.github.com/isoniaos/types/tar.gz/0c65ea23a209b0945876b63ccabc71a40c49ac32':
+    resolution: {tarball: https://codeload.github.com/isoniaos/types/tar.gz/0c65ea23a209b0945876b63ccabc71a40c49ac32}
+    version: 0.1.0
+
+  typescript@5.7.3:
+    resolution: {integrity: sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+snapshots:
+
+  '@isonia/types@https://codeload.github.com/isoniaos/types/tar.gz/0c65ea23a209b0945876b63ccabc71a40c49ac32': {}
+
+  typescript@5.7.3: {}
