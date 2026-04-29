@@ -7,6 +7,7 @@ export {
 export {
   createIsoniaControlPlaneClient,
   type IsoniaDiagnosticsClient,
+  type IsoniaPoliciesClient,
   type IsoniaControlPlaneClient,
   type IsoniaControlPlaneClientOptions,
   type IsoniaFetch,

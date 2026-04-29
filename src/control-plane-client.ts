@@ -7,6 +7,7 @@ import type {
   MandateDto,
   OrganizationDto,
   OrganizationOverviewDto,
+  OrganizationPoliciesDto,
   ProposalDto,
   ProposalRouteExplanationDto,
   ProposalSummaryDto,
@@ -46,8 +47,13 @@ export interface IsoniaDiagnosticsClient {
   get(): Promise<DiagnosticsDto>;
 }
 
+export interface IsoniaPoliciesClient {
+  list(orgId: string): Promise<OrganizationPoliciesDto>;
+}
+
 export interface IsoniaControlPlaneClient {
   readonly diagnostics: IsoniaDiagnosticsClient;
+  readonly policies: IsoniaPoliciesClient;
   getHealth(): Promise<IsoniaHealthDto>;
   getVersion(): Promise<IsoniaVersionDto>;
   getOrganizations(): Promise<OrganizationDto[]>;
@@ -57,6 +63,7 @@ export interface IsoniaControlPlaneClient {
   getRoles(orgId: string): Promise<RoleDto[]>;
   getMandates(orgId: string): Promise<MandateDto[]>;
   getHolderMandates(orgId: string, address: Address): Promise<MandateDto[]>;
+  getPolicies(orgId: string): Promise<OrganizationPoliciesDto>;
   getProposals(orgId: string): Promise<ProposalSummaryDto[]>;
   getProposal(orgId: string, proposalId: string): Promise<ProposalDto>;
   getProposalRoute(
@@ -74,6 +81,7 @@ export function createIsoniaControlPlaneClient(
 
 class DefaultIsoniaControlPlaneClient implements IsoniaControlPlaneClient {
   readonly diagnostics: IsoniaDiagnosticsClient;
+  readonly policies: IsoniaPoliciesClient;
   private readonly baseUrl: string;
   private readonly fetcher: IsoniaFetch;
   private readonly headers: Readonly<Record<string, string>>;
@@ -87,6 +95,9 @@ class DefaultIsoniaControlPlaneClient implements IsoniaControlPlaneClient {
     };
     this.diagnostics = {
       get: () => this.getDiagnostics(),
+    };
+    this.policies = {
+      list: (orgId) => this.getPolicies(orgId),
     };
   }
 
@@ -128,6 +139,10 @@ class DefaultIsoniaControlPlaneClient implements IsoniaControlPlaneClient {
 
   getHolderMandates(orgId: string, address: Address): Promise<MandateDto[]> {
     return this.get(controlPlanePaths.holderMandates(orgId, address));
+  }
+
+  getPolicies(orgId: string): Promise<OrganizationPoliciesDto> {
+    return this.get(controlPlanePaths.policies(orgId));
   }
 
   getProposals(orgId: string): Promise<ProposalSummaryDto[]> {

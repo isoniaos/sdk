@@ -21,6 +21,8 @@ export const controlPlanePaths = {
     orgId: ControlPlanePathSegment,
     address: ControlPlanePathSegment,
   ): string => buildControlPlanePath("orgs", orgId, "holders", address, "mandates"),
+  policies: (orgId: ControlPlanePathSegment): string =>
+    buildControlPlanePath("orgs", orgId, "policies"),
   proposals: (orgId: ControlPlanePathSegment): string =>
     buildControlPlanePath("orgs", orgId, "proposals"),
   proposal: (

@@ -30,6 +30,7 @@ test("builds body role and mandate endpoint paths", () => {
   assert.equal(controlPlanePaths.bodies("1"), "/v1/orgs/1/bodies");
   assert.equal(controlPlanePaths.roles("1"), "/v1/orgs/1/roles");
   assert.equal(controlPlanePaths.mandates("1"), "/v1/orgs/1/mandates");
+  assert.equal(controlPlanePaths.policies("1"), "/v1/orgs/1/policies");
   assert.equal(
     controlPlanePaths.holderMandates("1", holder),
     `/v1/orgs/1/holders/${holder}/mandates`,
@@ -91,5 +92,39 @@ test("fetches diagnostics through the nested diagnostics client", async () => {
 
   assert.deepEqual(await client.diagnostics.get(), diagnostics);
   assert.equal(calls[0].url, "http://localhost:3000/v1/diagnostics");
+  assert.equal(calls[0].init.method, "GET");
+});
+
+test("fetches policies through the nested policies client", async () => {
+  const policies = [
+    {
+      chainId: 31337,
+      orgId: "1",
+      proposalType: "standard",
+      version: "2",
+      requiredApprovalBodies: ["1", "2"],
+      vetoBodies: ["9"],
+      executorBody: "3",
+      timelockSeconds: "60",
+      enabled: true,
+      dataStatus: "confirmed",
+    },
+  ];
+  const calls = [];
+  const client = createIsoniaControlPlaneClient({
+    baseUrl: "http://localhost:3000/",
+    fetcher: async (url, init) => {
+      calls.push({ url, init });
+      return {
+        ok: true,
+        status: 200,
+        statusText: "OK",
+        json: async () => policies,
+      };
+    },
+  });
+
+  assert.deepEqual(await client.policies.list("1"), policies);
+  assert.equal(calls[0].url, "http://localhost:3000/v1/orgs/1/policies");
   assert.equal(calls[0].init.method, "GET");
 });

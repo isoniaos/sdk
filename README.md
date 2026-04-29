@@ -1,6 +1,6 @@
 # @isonia/sdk
 
-Pure TypeScript SDK for IsoniaOS v0.1 Control Plane REST APIs.
+Pure TypeScript SDK for IsoniaOS Control Plane REST APIs.
 
 ## Scope
 
@@ -46,6 +46,7 @@ const client = createIsoniaControlPlaneClient({
 });
 
 const organizations = await client.getOrganizations();
+const policies = await client.policies.list("1");
 const route = await client.getProposalRoute("1", "7");
 const diagnostics = await client.diagnostics.get();
 ```
@@ -58,7 +59,7 @@ import { controlPlanePaths } from "@isonia/sdk/control-plane-paths";
 const path = controlPlanePaths.proposalRoute("1", "7");
 ```
 
-## Supported v0.1 Endpoints
+## Supported Endpoints
 
 ```txt
 GET /v1/health
@@ -71,6 +72,7 @@ GET /v1/orgs/:orgId/bodies
 GET /v1/orgs/:orgId/roles
 GET /v1/orgs/:orgId/mandates
 GET /v1/orgs/:orgId/holders/:address/mandates
+GET /v1/orgs/:orgId/policies
 GET /v1/orgs/:orgId/proposals
 GET /v1/orgs/:orgId/proposals/:proposalId
 GET /v1/orgs/:orgId/proposals/:proposalId/route
