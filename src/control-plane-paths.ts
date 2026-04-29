@@ -5,6 +5,7 @@ export const CONTROL_PLANE_API_VERSION = "v1";
 export const controlPlanePaths = {
   health: (): string => buildControlPlanePath("health"),
   version: (): string => buildControlPlanePath("version"),
+  diagnostics: (): string => buildControlPlanePath("diagnostics"),
   organizations: (): string => buildControlPlanePath("orgs"),
   organization: (orgId: ControlPlanePathSegment): string =>
     buildControlPlanePath("orgs", orgId),

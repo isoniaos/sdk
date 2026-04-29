@@ -47,6 +47,7 @@ const client = createIsoniaControlPlaneClient({
 
 const organizations = await client.getOrganizations();
 const route = await client.getProposalRoute("1", "7");
+const diagnostics = await client.diagnostics.get();
 ```
 
 Endpoint path helpers are exported for tests, mocks, and adapter code:
@@ -62,6 +63,7 @@ const path = controlPlanePaths.proposalRoute("1", "7");
 ```txt
 GET /v1/health
 GET /v1/version
+GET /v1/diagnostics
 GET /v1/orgs
 GET /v1/orgs/:orgId
 GET /v1/orgs/:orgId/overview

@@ -6,6 +6,7 @@ export {
 } from "./control-plane-paths";
 export {
   createIsoniaControlPlaneClient,
+  type IsoniaDiagnosticsClient,
   type IsoniaControlPlaneClient,
   type IsoniaControlPlaneClientOptions,
   type IsoniaFetch,

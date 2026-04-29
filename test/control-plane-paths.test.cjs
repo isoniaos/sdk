@@ -6,6 +6,7 @@ const {
   buildControlPlanePath,
   controlPlanePaths,
 } = require("../dist/control-plane-paths.js");
+const { createIsoniaControlPlaneClient } = require("../dist/index.js");
 
 test("exports the v0.1 API version segment", () => {
   assert.equal(CONTROL_PLANE_API_VERSION, "v1");
@@ -14,6 +15,7 @@ test("exports the v0.1 API version segment", () => {
 test("builds system endpoint paths", () => {
   assert.equal(controlPlanePaths.health(), "/v1/health");
   assert.equal(controlPlanePaths.version(), "/v1/version");
+  assert.equal(controlPlanePaths.diagnostics(), "/v1/diagnostics");
 });
 
 test("builds organization endpoint paths", () => {
@@ -50,4 +52,44 @@ test("encodes path segments", () => {
     controlPlanePaths.proposal("space org", "proposal #1"),
     "/v1/orgs/space%20org/proposals/proposal%20%231",
   );
+});
+
+test("fetches diagnostics through the nested diagnostics client", async () => {
+  const diagnostics = {
+    apiVersion: "v1",
+    chainId: 31337,
+    confirmations: 5,
+    contracts: [],
+    latestChainBlock: "120",
+    latestSafeBlock: "115",
+    lastScannedBlocks: [],
+    rawEventCounts: {
+      observed: 0,
+      confirmed: 1,
+      processed: 2,
+      failed: 0,
+      orphaned: 0,
+    },
+    projectionBacklog: 1,
+    failedProjectionCount: 0,
+    staleDataIndicators: [],
+    generatedAt: "2026-04-29T12:00:00.000Z",
+  };
+  const calls = [];
+  const client = createIsoniaControlPlaneClient({
+    baseUrl: "http://localhost:3000/",
+    fetcher: async (url, init) => {
+      calls.push({ url, init });
+      return {
+        ok: true,
+        status: 200,
+        statusText: "OK",
+        json: async () => diagnostics,
+      };
+    },
+  });
+
+  assert.deepEqual(await client.diagnostics.get(), diagnostics);
+  assert.equal(calls[0].url, "http://localhost:3000/v1/diagnostics");
+  assert.equal(calls[0].init.method, "GET");
 });

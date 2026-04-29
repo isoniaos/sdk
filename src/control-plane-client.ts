@@ -2,6 +2,7 @@ import type {
   Address,
   BodyDto,
   ChainId,
+  DiagnosticsDto,
   GovernanceGraphDto,
   MandateDto,
   OrganizationDto,
@@ -41,7 +42,12 @@ export interface IsoniaVersionDto {
   readonly contracts: IsoniaVersionContractsDto;
 }
 
+export interface IsoniaDiagnosticsClient {
+  get(): Promise<DiagnosticsDto>;
+}
+
 export interface IsoniaControlPlaneClient {
+  readonly diagnostics: IsoniaDiagnosticsClient;
   getHealth(): Promise<IsoniaHealthDto>;
   getVersion(): Promise<IsoniaVersionDto>;
   getOrganizations(): Promise<OrganizationDto[]>;
@@ -67,6 +73,7 @@ export function createIsoniaControlPlaneClient(
 }
 
 class DefaultIsoniaControlPlaneClient implements IsoniaControlPlaneClient {
+  readonly diagnostics: IsoniaDiagnosticsClient;
   private readonly baseUrl: string;
   private readonly fetcher: IsoniaFetch;
   private readonly headers: Readonly<Record<string, string>>;
@@ -78,6 +85,9 @@ class DefaultIsoniaControlPlaneClient implements IsoniaControlPlaneClient {
       accept: "application/json",
       ...options.headers,
     };
+    this.diagnostics = {
+      get: () => this.getDiagnostics(),
+    };
   }
 
   getHealth(): Promise<IsoniaHealthDto> {
@@ -86,6 +96,10 @@ class DefaultIsoniaControlPlaneClient implements IsoniaControlPlaneClient {
 
   getVersion(): Promise<IsoniaVersionDto> {
     return this.get(controlPlanePaths.version());
+  }
+
+  getDiagnostics(): Promise<DiagnosticsDto> {
+    return this.get(controlPlanePaths.diagnostics());
   }
 
   getOrganizations(): Promise<OrganizationDto[]> {
