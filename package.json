@@ -1,6 +1,6 @@
 {
   "name": "@isonia/sdk",
-  "version": "0.5.0-alpha.3",
+  "version": "0.5.0-alpha.4",
   "description": "Pure TypeScript SDK for IsoniaOS Control Plane REST APIs",
   "license": "MIT",
   "main": "./dist/index.js",
@@ -26,7 +26,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@isonia/types": "github:isoniaos/types#v0.5.0-alpha.2"
+    "@isonia/types": "github:isoniaos/types#v0.5.0-alpha.3"
   },
   "devDependencies": {
     "typescript": "5.7.3"
