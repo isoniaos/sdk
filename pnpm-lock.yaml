@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@isonia/types':
-        specifier: github:isoniaos/types#v0.5.0-alpha.2
-        version: https://codeload.github.com/isoniaos/types/tar.gz/51179a58d35e04ed2a2acb7a7fe42f20e5d44807
+        specifier: github:isoniaos/types#v0.5.0-alpha.3
+        version: https://codeload.github.com/isoniaos/types/tar.gz/22e6625a421a63f6169df24f85f61af090c27c31
     devDependencies:
       typescript:
         specifier: 5.7.3
@@ -18,9 +18,9 @@ importers:
 
 packages:
 
-  '@isonia/types@https://codeload.github.com/isoniaos/types/tar.gz/51179a58d35e04ed2a2acb7a7fe42f20e5d44807':
-    resolution: {tarball: https://codeload.github.com/isoniaos/types/tar.gz/51179a58d35e04ed2a2acb7a7fe42f20e5d44807}
-    version: 0.5.0-alpha.2
+  '@isonia/types@https://codeload.github.com/isoniaos/types/tar.gz/22e6625a421a63f6169df24f85f61af090c27c31':
+    resolution: {tarball: https://codeload.github.com/isoniaos/types/tar.gz/22e6625a421a63f6169df24f85f61af090c27c31}
+    version: 0.5.0-alpha.3
 
   typescript@5.7.3:
     resolution: {integrity: sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==}
@@ -29,6 +29,6 @@ packages:
 
 snapshots:
 
-  '@isonia/types@https://codeload.github.com/isoniaos/types/tar.gz/51179a58d35e04ed2a2acb7a7fe42f20e5d44807': {}
+  '@isonia/types@https://codeload.github.com/isoniaos/types/tar.gz/22e6625a421a63f6169df24f85f61af090c27c31': {}
 
   typescript@5.7.3: {}

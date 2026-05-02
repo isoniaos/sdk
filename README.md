@@ -19,7 +19,7 @@ Until the public beta package registry release, depend on pinned GitHub tags:
 ```json
 {
   "dependencies": {
-    "@isonia/sdk": "github:isoniaos/sdk#v0.1.0"
+    "@isonia/sdk": "github:isoniaos/sdk#v0.5.0-alpha.5"
   }
 }
 ```
@@ -29,12 +29,14 @@ Until the public beta package registry release, depend on pinned GitHub tags:
 ```json
 {
   "dependencies": {
-    "@isonia/types": "github:isoniaos/types#v0.1.0"
+    "@isonia/types": "github:isoniaos/types#v0.5.0-alpha.3"
   }
 }
 ```
 
 Do not depend on `master` for application or deployment code. Use a tag or immutable commit SHA so installs are reproducible.
+
+The SDK builds against its declared `@isonia/types` package dependency. Do not add TypeScript path aliases from `@isonia/types` to a sibling `../types` repository; local package linking should still preserve the package boundary. The SDK has no runtime dependency beyond `@isonia/types`.
 
 ## Usage
 

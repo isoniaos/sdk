@@ -10,6 +10,10 @@ All notable changes to `@isonia/sdk` are documented here.
 
 - Added this changelog for release tracking and future release notes.
 
+### Changed
+
+- SDK TypeScript builds now resolve `@isonia/types` through the declared package dependency instead of a sibling repository path alias.
+
 ## [0.5.0-alpha.2]
 
 ### Added

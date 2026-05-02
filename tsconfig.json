@@ -15,15 +15,6 @@
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
     "moduleResolution": "Node",
-    "baseUrl": ".",
-    "paths": {
-      "@isonia/types": [
-        "../types/src/index.ts"
-      ],
-      "@isonia/types/*": [
-        "../types/src/*"
-      ]
-    },
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
