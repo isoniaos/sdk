@@ -18,10 +18,10 @@
     "baseUrl": ".",
     "paths": {
       "@isonia/types": [
-        "../types/dist/index.d.ts"
+        "../types/src/index.ts"
       ],
       "@isonia/types/*": [
-        "../types/dist/*"
+        "../types/src/*"
       ]
     },
     "forceConsistentCasingInFileNames": true,
