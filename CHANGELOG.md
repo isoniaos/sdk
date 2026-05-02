@@ -6,6 +6,8 @@ All notable changes to `@isonia/sdk` are documented here.
 
 ## [Unreleased]
 
+## [0.5.0-alpha.6]
+
 ### Added
 
 - Added this changelog for release tracking and future release notes.
@@ -13,6 +15,13 @@ All notable changes to `@isonia/sdk` are documented here.
 ### Changed
 
 - SDK TypeScript builds now resolve `@isonia/types` through the declared package dependency instead of a sibling repository path alias.
+- Refreshed README install guidance for the v0.5 Developer Preview compatibility set.
+
+## [0.5.0-alpha.5]
+
+### Changed
+
+- Updated package metadata for the v0.5 alpha SDK tag.
 
 ## [0.5.0-alpha.2]
 
@@ -29,6 +38,8 @@ All notable changes to `@isonia/sdk` are documented here.
 - Endpoint path construction helpers.
 - Shared response typing through `@isonia/types`.
 
-[Unreleased]: https://github.com/isoniaos/sdk/compare/v0.5.0-alpha.2...HEAD
+[Unreleased]: https://github.com/isoniaos/sdk/compare/v0.5.0-alpha.6...HEAD
+[0.5.0-alpha.6]: https://github.com/isoniaos/sdk/releases/tag/v0.5.0-alpha.6
+[0.5.0-alpha.5]: https://github.com/isoniaos/sdk/releases/tag/v0.5.0-alpha.5
 [0.5.0-alpha.2]: https://github.com/isoniaos/sdk/releases/tag/v0.5.0-alpha.2
 [0.1.0]: https://github.com/isoniaos/sdk/releases/tag/v0.1.0

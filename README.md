@@ -19,12 +19,12 @@ Until the public beta package registry release, depend on pinned GitHub tags:
 ```json
 {
   "dependencies": {
-    "@isonia/sdk": "github:isoniaos/sdk#v0.5.0-alpha.5"
+    "@isonia/sdk": "github:isoniaos/sdk#v0.5.0-alpha.6"
   }
 }
 ```
 
-`@isonia/sdk` depends on the matching shared type package:
+`@isonia/sdk` depends on the current shared v0.5 type package:
 
 ```json
 {
