@@ -24,7 +24,7 @@ Until the public beta package registry release, depend on pinned GitHub tags:
 }
 ```
 
-`@isonia/sdk` depends on the current shared v0.5 type package:
+`@isonia/sdk` depends on the known-good v0.5 compatibility type package:
 
 ```json
 {

@@ -8,6 +8,7 @@ All notable changes to `@isonia/sdk` are documented here.
 
 ### Changed
 
+- Prepared repository context for v0.6 alpha work after the closed v0.5 compatibility set.
 - Updated the pinned `@isonia/types` dependency ref and README example to `v0.5.0-alpha.5`.
 
 ## [0.5.0-alpha.6]
