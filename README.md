@@ -29,7 +29,7 @@ Until the public beta package registry release, depend on pinned GitHub tags:
 ```json
 {
   "dependencies": {
-    "@isonia/types": "github:isoniaos/types#v0.5.0-alpha.3"
+    "@isonia/types": "github:isoniaos/types#v0.5.0-alpha.5"
   }
 }
 ```
