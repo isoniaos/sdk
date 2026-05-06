@@ -6,6 +6,10 @@ All notable changes to `@isonia/sdk` are documented here.
 
 ## [Unreleased]
 
+## [0.6.0-alpha.4]
+
+- pnpm workspace configuration updated to use `onlyBuiltDependencies` for better dependency resolution.
+
 ## [0.6.0-alpha.3]
 
 - Updated the pinned `@isonia/types` dependency ref to `v0.6.0-alpha.2`.
@@ -50,7 +54,8 @@ All notable changes to `@isonia/sdk` are documented here.
 - Endpoint path construction helpers.
 - Shared response typing through `@isonia/types`.
 
-[Unreleased]: https://github.com/isoniaos/sdk/compare/v0.6.0-alpha.3...HEAD
+[Unreleased]: https://github.com/isoniaos/sdk/compare/v0.6.0-alpha.4...HEAD
+[0.6.0-alpha.4]: https://github.com/isoniaos/sdk/releases/tag/v0.6.0-alpha.4
 [0.6.0-alpha.3]: https://github.com/isoniaos/sdk/releases/tag/v0.6.0-alpha.3
 [0.6.0-alpha.2]: https://github.com/isoniaos/sdk/releases/tag/v0.6.0-alpha.2
 [0.5.0-alpha.6]: https://github.com/isoniaos/sdk/releases/tag/v0.5.0-alpha.6
