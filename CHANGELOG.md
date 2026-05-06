@@ -6,6 +6,8 @@ All notable changes to `@isonia/sdk` are documented here.
 
 ## [Unreleased]
 
+## [0.6.0-alpha.2]
+
 ### Changed
 
 - Updated the package Node engine baseline to `>=22` and added repository line-ending policy for v0.6 hardening.
@@ -45,6 +47,7 @@ All notable changes to `@isonia/sdk` are documented here.
 - Shared response typing through `@isonia/types`.
 
 [Unreleased]: https://github.com/isoniaos/sdk/compare/v0.5.0-alpha.6...HEAD
+[0.6.0-alpha.2]: https://github.com/isoniaos/sdk/releases/tag/v0.6.0-alpha.2
 [0.5.0-alpha.6]: https://github.com/isoniaos/sdk/releases/tag/v0.5.0-alpha.6
 [0.5.0-alpha.5]: https://github.com/isoniaos/sdk/releases/tag/v0.5.0-alpha.5
 [0.5.0-alpha.2]: https://github.com/isoniaos/sdk/releases/tag/v0.5.0-alpha.2
