@@ -8,6 +8,7 @@ All notable changes to `@isonia/sdk` are documented here.
 
 ### Changed
 
+- Updated the package Node engine baseline to `>=22` and added repository line-ending policy for v0.6 hardening.
 - Prepared repository context for v0.6 alpha work after the closed v0.5 compatibility set.
 - Updated the pinned `@isonia/types` dependency ref and README example to `v0.5.0-alpha.5`.
 
