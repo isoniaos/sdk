@@ -6,6 +6,14 @@ All notable changes to `@isonia/sdk` are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- Added typed admin batch activation planning helpers for v0.7 contract batch activation payloads.
+
+### Changed
+
+- Updated the pinned `@isonia/types` dependency ref to `v0.7.0-alpha.1`.
+
 ## [0.6.0-alpha.4]
 
 - pnpm workspace configuration updated to use `onlyBuiltDependencies` for better dependency resolution.

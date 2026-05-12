@@ -19,17 +19,17 @@ Until the public beta package registry release, depend on pinned GitHub tags:
 ```json
 {
   "dependencies": {
-    "@isonia/sdk": "github:isoniaos/sdk#v0.5.0-alpha.6"
+    "@isonia/sdk": "github:isoniaos/sdk#<reviewed-sdk-tag-or-commit>"
   }
 }
 ```
 
-`@isonia/sdk` depends on the known-good v0.5 compatibility type package:
+This v0.7-compatible SDK line depends on the v0.7 shared type package:
 
 ```json
 {
   "dependencies": {
-    "@isonia/types": "github:isoniaos/types#v0.5.0-alpha.5"
+    "@isonia/types": "github:isoniaos/types#v0.7.0-alpha.1"
   }
 }
 ```
@@ -59,6 +59,31 @@ Endpoint path helpers are exported for tests, mocks, and adapter code:
 import { controlPlanePaths } from "@isonia/sdk/control-plane-paths";
 
 const path = controlPlanePaths.proposalRoute("1", "7");
+```
+
+## v0.7 Admin Batch Activation Helpers
+
+The SDK uses `@isonia/types@v0.7.0-alpha.1` and includes typed helper utilities for planning contract batch activation payloads. These helpers produce deterministic plain objects for App Core or another caller to consume; they do not execute wallet transactions, encode ABI calldata, or own runtime chain behavior.
+
+```ts
+import { createAdminBatchActivationPlan } from "@isonia/sdk";
+import { ActivationExecutionMode } from "@isonia/types";
+
+const plan = createAdminBatchActivationPlan({
+  executionMode: ActivationExecutionMode.ContractBatch,
+  bodies: {
+    orgId: "1",
+    inputs: [{ kind: "general_council", metadataURI: "ipfs://body" }],
+  },
+});
+```
+
+Serial activation remains the reliable fallback. Contract-level typed batch activation is the preferred v0.7 optimization when deployment capabilities support it. EIP-5792 wallet batching remains optional/prototype diagnostics and is not selected as the default mode.
+
+The activation helper module is also available as a subpath export:
+
+```ts
+import { createAdminBatchActivationPlan } from "@isonia/sdk/activation-batch";
 ```
 
 ## Supported Endpoints

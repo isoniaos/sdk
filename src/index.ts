@@ -1,4 +1,19 @@
 export {
+  createAdminBatchActivationPlan,
+  getAdminBatchActivationFunctionName,
+  isContractBatchActivationMode,
+  isSerialActivationMode,
+  isWalletBatchEip5792Mode,
+  type AdminBatchActivationGroupName,
+  type AdminBatchActivationPlan,
+  type AdminBatchActivationPlanCall,
+  type AssignMandatesActivationPlanCall,
+  type CreateAdminBatchActivationPlanInput,
+  type CreateBodiesActivationPlanCall,
+  type CreateRolesActivationPlanCall,
+  type SetPolicyRulesActivationPlanCall,
+} from "./activation-batch";
+export {
   CONTROL_PLANE_API_VERSION,
   buildControlPlanePath,
   controlPlanePaths,
