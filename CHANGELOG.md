@@ -6,6 +6,8 @@ All notable changes to `@isonia/sdk` are documented here.
 
 ## [Unreleased]
 
+## [0.7.0-alpha.2]
+
 ### Added
 
 - Added bootstrap finalization planning/read helpers and post-finalization blocked-operation helpers.
@@ -72,7 +74,8 @@ All notable changes to `@isonia/sdk` are documented here.
 - Endpoint path construction helpers.
 - Shared response typing through `@isonia/types`.
 
-[Unreleased]: https://github.com/isoniaos/sdk/compare/v0.7.0-alpha.1...HEAD
+[Unreleased]: https://github.com/isoniaos/sdk/compare/v0.7.0-alpha.2...HEAD
+[0.7.0-alpha.2]: https://github.com/isoniaos/sdk/compare/v0.7.0-alpha.1...v0.7.0-alpha.2
 [0.7.0-alpha.1]: https://github.com/isoniaos/sdk/releases/tag/v0.7.0-alpha.1
 [0.6.0-alpha.4]: https://github.com/isoniaos/sdk/releases/tag/v0.6.0-alpha.4
 [0.6.0-alpha.3]: https://github.com/isoniaos/sdk/releases/tag/v0.6.0-alpha.3
