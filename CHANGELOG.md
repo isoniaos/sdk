@@ -6,6 +6,14 @@ All notable changes to `@isonia/sdk` are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- Added bootstrap finalization planning/read helpers and post-finalization blocked-operation helpers.
+
+### Changed
+
+- Updated the pinned `@isonia/types` dependency ref to `v0.7.0-alpha.2`.
+
 ## [0.7.0-alpha.1]
 
 ### Added

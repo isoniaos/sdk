@@ -29,7 +29,7 @@ This v0.7-compatible SDK line depends on the v0.7 shared type package:
 ```json
 {
   "dependencies": {
-    "@isonia/types": "github:isoniaos/types#v0.7.0-alpha.1"
+    "@isonia/types": "github:isoniaos/types#v0.7.0-alpha.2"
   }
 }
 ```
@@ -63,7 +63,7 @@ const path = controlPlanePaths.proposalRoute("1", "7");
 
 ## v0.7 Admin Batch Activation Helpers
 
-The SDK uses `@isonia/types@v0.7.0-alpha.1` and includes typed helper utilities for planning contract batch activation payloads. These helpers produce deterministic plain objects for App Core or another caller to consume; they do not execute wallet transactions, encode ABI calldata, or own runtime chain behavior.
+The SDK uses `@isonia/types@v0.7.0-alpha.2` and includes typed helper utilities for planning contract batch activation payloads. These helpers produce deterministic plain objects for App Core or another caller to consume; they do not execute wallet transactions, encode ABI calldata, or own runtime chain behavior.
 
 ```ts
 import { createAdminBatchActivationPlan } from "@isonia/sdk";
@@ -85,6 +85,26 @@ The activation helper module is also available as a subpath export:
 ```ts
 import { createAdminBatchActivationPlan } from "@isonia/sdk/activation-batch";
 ```
+
+## v0.7 Bootstrap Finalization Helpers
+
+The SDK uses `@isonia/types@v0.7.0-alpha.2` and includes small planning/read helpers for bootstrap finalization. These helpers describe the intended `finalizeOrganization` call and `isOrganizationFinalized` read as deterministic plain objects; they do not execute wallet transactions, encode ABI calldata, or manage providers.
+
+```ts
+import {
+  createOrganizationFinalizationPlan,
+  createOrganizationFinalizationReadPlan,
+  isBootstrapAdminOperationBlockedAfterFinalization,
+} from "@isonia/sdk/finalization";
+
+const finalizationPlan = createOrganizationFinalizationPlan({ orgId: "1" });
+const readPlan = createOrganizationFinalizationReadPlan({ orgId: "1" });
+const blocked = isBootstrapAdminOperationBlockedAfterFinalization(
+  "batch_create_bodies",
+);
+```
+
+Finalization is irreversible in this alpha. Finalized organizations remain active and readable, while bootstrap-admin mutation helpers can use the shared blocked-operation metadata to label or disable post-finalization bootstrap actions. Emergency/recovery flows and governance-controlled post-finalization mutation semantics are not implemented in this SDK line.
 
 ## Supported Endpoints
 

@@ -21,16 +21,20 @@
     "./control-plane-paths": {
       "types": "./dist/control-plane-paths.d.ts",
       "default": "./dist/control-plane-paths.js"
+    },
+    "./finalization": {
+      "types": "./dist/finalization.d.ts",
+      "default": "./dist/finalization.js"
     }
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "prepare": "tsc -p tsconfig.json",
-    "test": "pnpm build && node --test test/control-plane-paths.test.cjs test/activation-batch.test.cjs",
+    "test": "pnpm build && node --test test/control-plane-paths.test.cjs test/activation-batch.test.cjs test/finalization.test.cjs",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@isonia/types": "github:isoniaos/types#v0.7.0-alpha.1"
+    "@isonia/types": "github:isoniaos/types#v0.7.0-alpha.2"
   },
   "devDependencies": {
     "typescript": "5.7.3"

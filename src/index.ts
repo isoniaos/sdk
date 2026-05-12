@@ -14,6 +14,21 @@ export {
   type SetPolicyRulesActivationPlanCall,
 } from "./activation-batch";
 export {
+  createOrganizationFinalizationPlan,
+  createOrganizationFinalizationReadPlan,
+  getOrganizationFinalizationFunctionName,
+  isBootstrapAdminOperationBlockedAfterFinalization,
+  isOrganizationFinalizedStatus,
+  isOrganizationNotFinalizedStatus,
+  type CreateOrganizationFinalizationPlanInput,
+  type CreateOrganizationFinalizationReadPlanInput,
+  type OrganizationFinalizationFunctionKind,
+  type OrganizationFinalizationPlan,
+  type OrganizationFinalizationReadPlan,
+  type OrganizationFinalizationRequiredSignerRole,
+  type PostFinalizationBlockedBootstrapAdminOperation,
+} from "./finalization";
+export {
   CONTROL_PLANE_API_VERSION,
   buildControlPlanePath,
   controlPlanePaths,
