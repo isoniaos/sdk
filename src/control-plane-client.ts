@@ -1,8 +1,11 @@
 import type {
+  AccountabilityRecordDto,
   Address,
   BodyDto,
   ChainId,
+  DecisionRecordDto,
   DiagnosticsDto,
+  ExternalResourceDto,
   GovernanceGraphDto,
   MandateDto,
   OrganizationDto,
@@ -11,6 +14,7 @@ import type {
   ProposalDto,
   ProposalRouteExplanationDto,
   ProposalSummaryDto,
+  PublicOrganizationArchiveDto,
   RoleDto,
 } from "@isonia/types";
 import { controlPlanePaths } from "./control-plane-paths";
@@ -51,25 +55,63 @@ export interface IsoniaPoliciesClient {
   list(orgId: string): Promise<OrganizationPoliciesDto>;
 }
 
+export interface IsoniaArchiveClient {
+  get(orgId: string): Promise<PublicOrganizationArchiveDto>;
+}
+
+export interface IsoniaDecisionRecordsClient {
+  list(orgId: string): Promise<DecisionRecordDto[]>;
+  get(orgId: string, proposalId: string): Promise<DecisionRecordDto>;
+}
+
+export interface IsoniaAccountabilityClient {
+  get(orgId: string, proposalId: string): Promise<AccountabilityRecordDto>;
+}
+
+export interface IsoniaExternalResourcesClient {
+  listForProposal(
+    orgId: string,
+    proposalId: string,
+  ): Promise<ExternalResourceDto[]>;
+}
+
 export interface IsoniaControlPlaneClient {
+  readonly archive: IsoniaArchiveClient;
+  readonly accountability: IsoniaAccountabilityClient;
+  readonly decisionRecords: IsoniaDecisionRecordsClient;
   readonly diagnostics: IsoniaDiagnosticsClient;
+  readonly externalResources: IsoniaExternalResourcesClient;
   readonly policies: IsoniaPoliciesClient;
   getHealth(): Promise<IsoniaHealthDto>;
   getVersion(): Promise<IsoniaVersionDto>;
   getOrganizations(): Promise<OrganizationDto[]>;
   getOrganization(orgId: string): Promise<OrganizationDto>;
   getOrganizationOverview(orgId: string): Promise<OrganizationOverviewDto>;
+  getPublicArchive(orgId: string): Promise<PublicOrganizationArchiveDto>;
   getBodies(orgId: string): Promise<BodyDto[]>;
   getRoles(orgId: string): Promise<RoleDto[]>;
   getMandates(orgId: string): Promise<MandateDto[]>;
   getHolderMandates(orgId: string, address: Address): Promise<MandateDto[]>;
   getPolicies(orgId: string): Promise<OrganizationPoliciesDto>;
+  getDecisionRecords(orgId: string): Promise<DecisionRecordDto[]>;
   getProposals(orgId: string): Promise<ProposalSummaryDto[]>;
   getProposal(orgId: string, proposalId: string): Promise<ProposalDto>;
   getProposalRoute(
     orgId: string,
     proposalId: string,
   ): Promise<ProposalRouteExplanationDto>;
+  getDecisionRecord(
+    orgId: string,
+    proposalId: string,
+  ): Promise<DecisionRecordDto>;
+  getAccountabilityRecord(
+    orgId: string,
+    proposalId: string,
+  ): Promise<AccountabilityRecordDto>;
+  getExternalResources(
+    orgId: string,
+    proposalId: string,
+  ): Promise<ExternalResourceDto[]>;
   getGraph(orgId: string): Promise<GovernanceGraphDto>;
 }
 
@@ -80,7 +122,11 @@ export function createIsoniaControlPlaneClient(
 }
 
 class DefaultIsoniaControlPlaneClient implements IsoniaControlPlaneClient {
+  readonly archive: IsoniaArchiveClient;
+  readonly accountability: IsoniaAccountabilityClient;
+  readonly decisionRecords: IsoniaDecisionRecordsClient;
   readonly diagnostics: IsoniaDiagnosticsClient;
+  readonly externalResources: IsoniaExternalResourcesClient;
   readonly policies: IsoniaPoliciesClient;
   private readonly baseUrl: string;
   private readonly fetcher: IsoniaFetch;
@@ -93,8 +139,23 @@ class DefaultIsoniaControlPlaneClient implements IsoniaControlPlaneClient {
       accept: "application/json",
       ...options.headers,
     };
+    this.archive = {
+      get: (orgId) => this.getPublicArchive(orgId),
+    };
+    this.accountability = {
+      get: (orgId, proposalId) =>
+        this.getAccountabilityRecord(orgId, proposalId),
+    };
+    this.decisionRecords = {
+      list: (orgId) => this.getDecisionRecords(orgId),
+      get: (orgId, proposalId) => this.getDecisionRecord(orgId, proposalId),
+    };
     this.diagnostics = {
       get: () => this.getDiagnostics(),
+    };
+    this.externalResources = {
+      listForProposal: (orgId, proposalId) =>
+        this.getExternalResources(orgId, proposalId),
     };
     this.policies = {
       list: (orgId) => this.getPolicies(orgId),
@@ -125,6 +186,10 @@ class DefaultIsoniaControlPlaneClient implements IsoniaControlPlaneClient {
     return this.get(controlPlanePaths.organizationOverview(orgId));
   }
 
+  getPublicArchive(orgId: string): Promise<PublicOrganizationArchiveDto> {
+    return this.get(controlPlanePaths.publicArchive(orgId));
+  }
+
   getBodies(orgId: string): Promise<BodyDto[]> {
     return this.get(controlPlanePaths.bodies(orgId));
   }
@@ -145,6 +210,10 @@ class DefaultIsoniaControlPlaneClient implements IsoniaControlPlaneClient {
     return this.get(controlPlanePaths.policies(orgId));
   }
 
+  getDecisionRecords(orgId: string): Promise<DecisionRecordDto[]> {
+    return this.get(controlPlanePaths.decisionRecords(orgId));
+  }
+
   getProposals(orgId: string): Promise<ProposalSummaryDto[]> {
     return this.get(controlPlanePaths.proposals(orgId));
   }
@@ -158,6 +227,27 @@ class DefaultIsoniaControlPlaneClient implements IsoniaControlPlaneClient {
     proposalId: string,
   ): Promise<ProposalRouteExplanationDto> {
     return this.get(controlPlanePaths.proposalRoute(orgId, proposalId));
+  }
+
+  getDecisionRecord(
+    orgId: string,
+    proposalId: string,
+  ): Promise<DecisionRecordDto> {
+    return this.get(controlPlanePaths.decisionRecord(orgId, proposalId));
+  }
+
+  getAccountabilityRecord(
+    orgId: string,
+    proposalId: string,
+  ): Promise<AccountabilityRecordDto> {
+    return this.get(controlPlanePaths.accountabilityRecord(orgId, proposalId));
+  }
+
+  getExternalResources(
+    orgId: string,
+    proposalId: string,
+  ): Promise<ExternalResourceDto[]> {
+    return this.get(controlPlanePaths.externalResources(orgId, proposalId));
   }
 
   getGraph(orgId: string): Promise<GovernanceGraphDto> {

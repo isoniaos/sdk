@@ -47,11 +47,51 @@ test("builds proposal and graph endpoint paths", () => {
   assert.equal(controlPlanePaths.graph("1"), "/v1/orgs/1/graph");
 });
 
+test("builds public archive and accountability endpoint paths", () => {
+  assert.equal(controlPlanePaths.publicArchive("1"), "/v1/orgs/1/archive");
+  assert.equal(
+    controlPlanePaths.decisionRecords("1"),
+    "/v1/orgs/1/decision-records",
+  );
+  assert.equal(
+    controlPlanePaths.decisionRecord("1", "7"),
+    "/v1/orgs/1/proposals/7/decision-record",
+  );
+  assert.equal(
+    controlPlanePaths.accountabilityRecord("1", "7"),
+    "/v1/orgs/1/proposals/7/accountability",
+  );
+  assert.equal(
+    controlPlanePaths.externalResources("1", "7"),
+    "/v1/orgs/1/proposals/7/external-resources",
+  );
+});
+
 test("encodes path segments", () => {
   assert.equal(buildControlPlanePath("orgs", "org/1"), "/v1/orgs/org%2F1");
   assert.equal(
     controlPlanePaths.proposal("space org", "proposal #1"),
     "/v1/orgs/space%20org/proposals/proposal%20%231",
+  );
+  assert.equal(
+    controlPlanePaths.publicArchive("space org"),
+    "/v1/orgs/space%20org/archive",
+  );
+  assert.equal(
+    controlPlanePaths.decisionRecords("org/1"),
+    "/v1/orgs/org%2F1/decision-records",
+  );
+  assert.equal(
+    controlPlanePaths.decisionRecord("space org", "proposal #1"),
+    "/v1/orgs/space%20org/proposals/proposal%20%231/decision-record",
+  );
+  assert.equal(
+    controlPlanePaths.accountabilityRecord("space org", "proposal #1"),
+    "/v1/orgs/space%20org/proposals/proposal%20%231/accountability",
+  );
+  assert.equal(
+    controlPlanePaths.externalResources("space org", "proposal #1"),
+    "/v1/orgs/space%20org/proposals/proposal%20%231/external-resources",
   );
 });
 
@@ -127,4 +167,92 @@ test("fetches policies through the nested policies client", async () => {
   assert.deepEqual(await client.policies.list("1"), policies);
   assert.equal(calls[0].url, "http://localhost:3000/v1/orgs/1/policies");
   assert.equal(calls[0].init.method, "GET");
+});
+
+test("fetches public archive and accountability read models through direct client methods", async () => {
+  const archive = {
+    organization: { chainId: 31337, orgId: "1", name: "Demo", status: "active" },
+    counts: {
+      activeProposals: 1,
+      approvedAwaitingExecution: 0,
+      executedDecisions: 2,
+      failedOrCancelledFollowThrough: 0,
+      proposalsWithMissingEvidence: 0,
+      manualOnlyStatusRecords: 0,
+    },
+    proposals: [],
+  };
+  const decisionRecord = {
+    id: "decision-7",
+    orgId: "1",
+    proposalId: "7",
+    decisionResult: "approved",
+    requiresExecution: true,
+    evidence: [],
+    timestamps: {},
+  };
+  const accountabilityRecord = {
+    id: "accountability-7",
+    orgId: "1",
+    proposalId: "7",
+    executionStatus: "pending",
+    externalProofs: [],
+    manualUpdates: [],
+  };
+  const externalResources = [
+    {
+      id: "resource-1",
+      orgId: "1",
+      proposalId: "7",
+      provider: "manual",
+      relation: "evidence",
+      url: "https://example.com/evidence",
+      sourceLabel: "manual",
+      trustBoundary: "external",
+      authorityClaim: "non_authoritative",
+    },
+  ];
+  const responses = [
+    archive,
+    decisionRecord,
+    accountabilityRecord,
+    externalResources,
+  ];
+  const calls = [];
+  const client = createIsoniaControlPlaneClient({
+    baseUrl: "http://localhost:3000/",
+    fetcher: async (url, init) => {
+      calls.push({ url, init });
+      return {
+        ok: true,
+        status: 200,
+        statusText: "OK",
+        json: async () => responses.shift(),
+      };
+    },
+  });
+
+  assert.deepEqual(await client.getPublicArchive("1"), archive);
+  assert.deepEqual(await client.getDecisionRecord("1", "7"), decisionRecord);
+  assert.deepEqual(
+    await client.getAccountabilityRecord("1", "7"),
+    accountabilityRecord,
+  );
+  assert.deepEqual(await client.getExternalResources("1", "7"), externalResources);
+
+  assert.deepEqual(
+    calls.map((call) => [call.url, call.init.method]),
+    [
+      ["http://localhost:3000/v1/orgs/1/archive", "GET"],
+      [
+        "http://localhost:3000/v1/orgs/1/proposals/7/decision-record",
+        "GET",
+      ],
+      ["http://localhost:3000/v1/orgs/1/proposals/7/accountability", "GET"],
+      [
+        "http://localhost:3000/v1/orgs/1/proposals/7/external-resources",
+        "GET",
+      ],
+    ],
+  );
 });

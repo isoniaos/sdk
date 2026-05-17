@@ -11,6 +11,8 @@ export const controlPlanePaths = {
     buildControlPlanePath("orgs", orgId),
   organizationOverview: (orgId: ControlPlanePathSegment): string =>
     buildControlPlanePath("orgs", orgId, "overview"),
+  publicArchive: (orgId: ControlPlanePathSegment): string =>
+    buildControlPlanePath("orgs", orgId, "archive"),
   bodies: (orgId: ControlPlanePathSegment): string =>
     buildControlPlanePath("orgs", orgId, "bodies"),
   roles: (orgId: ControlPlanePathSegment): string =>
@@ -23,6 +25,8 @@ export const controlPlanePaths = {
   ): string => buildControlPlanePath("orgs", orgId, "holders", address, "mandates"),
   policies: (orgId: ControlPlanePathSegment): string =>
     buildControlPlanePath("orgs", orgId, "policies"),
+  decisionRecords: (orgId: ControlPlanePathSegment): string =>
+    buildControlPlanePath("orgs", orgId, "decision-records"),
   proposals: (orgId: ControlPlanePathSegment): string =>
     buildControlPlanePath("orgs", orgId, "proposals"),
   proposal: (
@@ -34,6 +38,39 @@ export const controlPlanePaths = {
     proposalId: ControlPlanePathSegment,
   ): string =>
     buildControlPlanePath("orgs", orgId, "proposals", proposalId, "route"),
+  decisionRecord: (
+    orgId: ControlPlanePathSegment,
+    proposalId: ControlPlanePathSegment,
+  ): string =>
+    buildControlPlanePath(
+      "orgs",
+      orgId,
+      "proposals",
+      proposalId,
+      "decision-record",
+    ),
+  accountabilityRecord: (
+    orgId: ControlPlanePathSegment,
+    proposalId: ControlPlanePathSegment,
+  ): string =>
+    buildControlPlanePath(
+      "orgs",
+      orgId,
+      "proposals",
+      proposalId,
+      "accountability",
+    ),
+  externalResources: (
+    orgId: ControlPlanePathSegment,
+    proposalId: ControlPlanePathSegment,
+  ): string =>
+    buildControlPlanePath(
+      "orgs",
+      orgId,
+      "proposals",
+      proposalId,
+      "external-resources",
+    ),
   graph: (orgId: ControlPlanePathSegment): string =>
     buildControlPlanePath("orgs", orgId, "graph"),
 } as const;

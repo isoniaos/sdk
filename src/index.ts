@@ -36,7 +36,11 @@ export {
 } from "./control-plane-paths";
 export {
   createIsoniaControlPlaneClient,
+  type IsoniaAccountabilityClient,
+  type IsoniaArchiveClient,
+  type IsoniaDecisionRecordsClient,
   type IsoniaDiagnosticsClient,
+  type IsoniaExternalResourcesClient,
   type IsoniaPoliciesClient,
   type IsoniaControlPlaneClient,
   type IsoniaControlPlaneClientOptions,
