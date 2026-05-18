@@ -34,6 +34,7 @@ export {
   controlPlanePaths,
   type ControlPlanePathSegment,
 } from "./control-plane-paths";
+export { hasKnownActionSelector } from "./proposals";
 export {
   createIsoniaControlPlaneClient,
   type IsoniaAccountabilityClient,

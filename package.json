@@ -1,6 +1,6 @@
 {
   "name": "@isonia/sdk",
-  "version": "0.8.0-alpha.2",
+  "version": "0.8.0-alpha.3",
   "description": "Pure TypeScript SDK for IsoniaOS Control Plane REST APIs",
   "license": "MIT",
   "main": "./dist/index.js",
@@ -25,16 +25,20 @@
     "./finalization": {
       "types": "./dist/finalization.d.ts",
       "default": "./dist/finalization.js"
+    },
+    "./proposals": {
+      "types": "./dist/proposals.d.ts",
+      "default": "./dist/proposals.js"
     }
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "prepare": "tsc -p tsconfig.json",
-    "test": "pnpm build && node --test test/control-plane-paths.test.cjs test/activation-batch.test.cjs test/finalization.test.cjs",
+    "test": "pnpm build && node --test test/control-plane-paths.test.cjs test/activation-batch.test.cjs test/finalization.test.cjs test/proposals.test.cjs",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
-    "@isonia/types": "github:isoniaos/types#v0.8.0-alpha.2"
+    "@isonia/types": "github:isoniaos/types#v0.8.0-alpha.3"
   },
   "devDependencies": {
     "typescript": "5.7.3"

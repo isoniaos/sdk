@@ -6,6 +6,20 @@ All notable changes to `@isonia/sdk` are documented here.
 
 ## [Unreleased]
 
+## [0.8.0-alpha.3]
+
+### Added
+
+- Added a small `hasKnownActionSelector` proposal helper that checks whether the shared `ProposalDto.actionSelector` field is present.
+
+### Changed
+
+- Updated the pinned `@isonia/types` dependency ref to `v0.8.0-alpha.3` so proposal DTOs expose selector-aware action identity when Control Plane returns it.
+
+### Notes
+
+- No provider integration, ABI decoding, customer target-contract adapters, demo logic, chain RPC behavior, UI behavior, SaaS behavior, or runtime authority interpretation was added.
+
 ## [0.8.0-alpha.2]
 
 ### Added
@@ -99,7 +113,8 @@ All notable changes to `@isonia/sdk` are documented here.
 - Endpoint path construction helpers.
 - Shared response typing through `@isonia/types`.
 
-[Unreleased]: https://github.com/isoniaos/sdk/compare/v0.8.0-alpha.2...HEAD
+[Unreleased]: https://github.com/isoniaos/sdk/compare/v0.8.0-alpha.3...HEAD
+[0.8.0-alpha.3]: https://github.com/isoniaos/sdk/releases/tag/v0.8.0-alpha.3
 [0.8.0-alpha.2]: https://github.com/isoniaos/sdk/releases/tag/v0.8.0-alpha.2
 [0.8.0-alpha.1]: https://github.com/isoniaos/sdk/releases/tag/v0.8.0-alpha.1
 [0.7.0-alpha.2]: https://github.com/isoniaos/sdk/releases/tag/v0.7.0-alpha.2

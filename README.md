@@ -30,7 +30,7 @@ This v0.8-compatible SDK line depends on the v0.8 shared type package:
 ```json
 {
   "dependencies": {
-    "@isonia/types": "github:isoniaos/types#v0.8.0-alpha.2"
+    "@isonia/types": "github:isoniaos/types#v0.8.0-alpha.3"
   }
 }
 ```
@@ -58,6 +58,28 @@ const resources = await client.getExternalResources("1", "7");
 const executionPermissions = await client.getExecutionPermissions("1");
 const diagnostics = await client.diagnostics.get();
 ```
+
+## v0.8 Selector-Aware Proposal Actions
+
+Proposal reads remain typed with the shared `ProposalDto` from `@isonia/types`. In `0.8.0-alpha.3`, that DTO may include `actionSelector` when Control Plane has indexed selector-aware protocol proposal events. The protocol proposal action identity is:
+
+```txt
+targetAddress + value + actionSelector + dataHash
+```
+
+The SDK only exposes typed REST payloads and a small presence helper:
+
+```ts
+import { hasKnownActionSelector } from "@isonia/sdk";
+
+const proposal = await client.getProposal("1", "7");
+
+if (hasKnownActionSelector(proposal)) {
+  console.log(proposal.actionSelector);
+}
+```
+
+`actionSelector` is a protocol-level `bytes4` selector field. The SDK does not decode arbitrary customer ABIs, parse calldata, look up selector names, call chain RPC, or infer authority from target-contract events.
 
 Endpoint path helpers are exported for tests, mocks, and adapter code:
 
@@ -108,7 +130,7 @@ Execution permission registry reads expose configured IsoniaOS protocol target a
 
 ## Admin Batch Activation Helpers
 
-The SDK uses `@isonia/types@v0.8.0-alpha.2` and includes typed helper utilities for planning contract batch activation payloads. These helpers produce deterministic plain objects for App Core or another caller to consume; they do not execute wallet transactions, encode ABI calldata, or own runtime chain behavior.
+The SDK uses `@isonia/types@v0.8.0-alpha.3` and includes typed helper utilities for planning contract batch activation payloads. These helpers produce deterministic plain objects for App Core or another caller to consume; they do not execute wallet transactions, encode ABI calldata, or own runtime chain behavior.
 
 ```ts
 import { createAdminBatchActivationPlan } from "@isonia/sdk";
@@ -133,7 +155,7 @@ import { createAdminBatchActivationPlan } from "@isonia/sdk/activation-batch";
 
 ## Bootstrap Finalization Helpers
 
-The SDK uses `@isonia/types@v0.8.0-alpha.2` and includes small planning/read helpers for bootstrap finalization. These helpers describe the intended `finalizeOrganization` call and `isOrganizationFinalized` read as deterministic plain objects; they do not execute wallet transactions, encode ABI calldata, or manage providers.
+The SDK uses `@isonia/types@v0.8.0-alpha.3` and includes small planning/read helpers for bootstrap finalization. These helpers describe the intended `finalizeOrganization` call and `isOrganizationFinalized` read as deterministic plain objects; they do not execute wallet transactions, encode ABI calldata, or manage providers.
 
 ```ts
 import {
