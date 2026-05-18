@@ -6,6 +6,20 @@ All notable changes to `@isonia/sdk` are documented here.
 
 ## [Unreleased]
 
+## [0.8.0-alpha.2]
+
+### Added
+
+- Added typed Control Plane path and client methods for organization execution-permission registry reads.
+
+### Changed
+
+- Updated the pinned `@isonia/types` dependency ref to `v0.8.0-alpha.2`.
+
+### Notes
+
+- No provider integration, ABI decoding, UI, or runtime authority logic was added.
+
 ## [0.8.0-alpha.1]
 
 ### Added
@@ -85,7 +99,8 @@ All notable changes to `@isonia/sdk` are documented here.
 - Endpoint path construction helpers.
 - Shared response typing through `@isonia/types`.
 
-[Unreleased]: https://github.com/isoniaos/sdk/compare/v0.8.0-alpha.1...HEAD
+[Unreleased]: https://github.com/isoniaos/sdk/compare/v0.8.0-alpha.2...HEAD
+[0.8.0-alpha.2]: https://github.com/isoniaos/sdk/releases/tag/v0.8.0-alpha.2
 [0.8.0-alpha.1]: https://github.com/isoniaos/sdk/releases/tag/v0.8.0-alpha.1
 [0.7.0-alpha.2]: https://github.com/isoniaos/sdk/releases/tag/v0.7.0-alpha.2
 [0.7.0-alpha.1]: https://github.com/isoniaos/sdk/releases/tag/v0.7.0-alpha.1

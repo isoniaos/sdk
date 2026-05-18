@@ -32,6 +32,10 @@ test("builds body role and mandate endpoint paths", () => {
   assert.equal(controlPlanePaths.mandates("1"), "/v1/orgs/1/mandates");
   assert.equal(controlPlanePaths.policies("1"), "/v1/orgs/1/policies");
   assert.equal(
+    controlPlanePaths.organizationExecutionPermissions("1"),
+    "/v1/orgs/1/execution-permissions",
+  );
+  assert.equal(
     controlPlanePaths.holderMandates("1", holder),
     `/v1/orgs/1/holders/${holder}/mandates`,
   );
@@ -80,6 +84,10 @@ test("encodes path segments", () => {
   assert.equal(
     controlPlanePaths.decisionRecords("org/1"),
     "/v1/orgs/org%2F1/decision-records",
+  );
+  assert.equal(
+    controlPlanePaths.organizationExecutionPermissions("org/1"),
+    "/v1/orgs/org%2F1/execution-permissions",
   );
   assert.equal(
     controlPlanePaths.decisionRecord("space org", "proposal #1"),
@@ -133,6 +141,39 @@ test("fetches diagnostics through the nested diagnostics client", async () => {
   assert.deepEqual(await client.diagnostics.get(), diagnostics);
   assert.equal(calls[0].url, "http://localhost:3000/v1/diagnostics");
   assert.equal(calls[0].init.method, "GET");
+});
+
+test("fetches execution permissions through direct and nested client methods", async () => {
+  const permissions = {
+    orgId: "1",
+    targetRules: [],
+    selectorRules: [],
+    permissions: [],
+  };
+  const responses = [permissions, permissions];
+  const calls = [];
+  const client = createIsoniaControlPlaneClient({
+    baseUrl: "http://localhost:3000/",
+    fetcher: async (url, init) => {
+      calls.push({ url, init });
+      return {
+        ok: true,
+        status: 200,
+        statusText: "OK",
+        json: async () => responses.shift(),
+      };
+    },
+  });
+
+  assert.deepEqual(await client.getExecutionPermissions("1"), permissions);
+  assert.deepEqual(await client.executionPermissions.get("org/1"), permissions);
+  assert.deepEqual(
+    calls.map((call) => [call.url, call.init.method]),
+    [
+      ["http://localhost:3000/v1/orgs/1/execution-permissions", "GET"],
+      ["http://localhost:3000/v1/orgs/org%2F1/execution-permissions", "GET"],
+    ],
+  );
 });
 
 test("fetches policies through the nested policies client", async () => {

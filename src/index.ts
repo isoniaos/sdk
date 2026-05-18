@@ -40,6 +40,7 @@ export {
   type IsoniaArchiveClient,
   type IsoniaDecisionRecordsClient,
   type IsoniaDiagnosticsClient,
+  type IsoniaExecutionPermissionsClient,
   type IsoniaExternalResourcesClient,
   type IsoniaPoliciesClient,
   type IsoniaControlPlaneClient,

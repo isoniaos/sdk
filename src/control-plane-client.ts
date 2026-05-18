@@ -9,6 +9,7 @@ import type {
   GovernanceGraphDto,
   MandateDto,
   OrganizationDto,
+  OrganizationExecutionPermissionsDto,
   OrganizationOverviewDto,
   OrganizationPoliciesDto,
   ProposalDto,
@@ -55,6 +56,10 @@ export interface IsoniaPoliciesClient {
   list(orgId: string): Promise<OrganizationPoliciesDto>;
 }
 
+export interface IsoniaExecutionPermissionsClient {
+  get(orgId: string | number): Promise<OrganizationExecutionPermissionsDto>;
+}
+
 export interface IsoniaArchiveClient {
   get(orgId: string): Promise<PublicOrganizationArchiveDto>;
 }
@@ -80,6 +85,7 @@ export interface IsoniaControlPlaneClient {
   readonly accountability: IsoniaAccountabilityClient;
   readonly decisionRecords: IsoniaDecisionRecordsClient;
   readonly diagnostics: IsoniaDiagnosticsClient;
+  readonly executionPermissions: IsoniaExecutionPermissionsClient;
   readonly externalResources: IsoniaExternalResourcesClient;
   readonly policies: IsoniaPoliciesClient;
   getHealth(): Promise<IsoniaHealthDto>;
@@ -93,6 +99,9 @@ export interface IsoniaControlPlaneClient {
   getMandates(orgId: string): Promise<MandateDto[]>;
   getHolderMandates(orgId: string, address: Address): Promise<MandateDto[]>;
   getPolicies(orgId: string): Promise<OrganizationPoliciesDto>;
+  getExecutionPermissions(
+    orgId: string | number,
+  ): Promise<OrganizationExecutionPermissionsDto>;
   getDecisionRecords(orgId: string): Promise<DecisionRecordDto[]>;
   getProposals(orgId: string): Promise<ProposalSummaryDto[]>;
   getProposal(orgId: string, proposalId: string): Promise<ProposalDto>;
@@ -126,6 +135,7 @@ class DefaultIsoniaControlPlaneClient implements IsoniaControlPlaneClient {
   readonly accountability: IsoniaAccountabilityClient;
   readonly decisionRecords: IsoniaDecisionRecordsClient;
   readonly diagnostics: IsoniaDiagnosticsClient;
+  readonly executionPermissions: IsoniaExecutionPermissionsClient;
   readonly externalResources: IsoniaExternalResourcesClient;
   readonly policies: IsoniaPoliciesClient;
   private readonly baseUrl: string;
@@ -152,6 +162,9 @@ class DefaultIsoniaControlPlaneClient implements IsoniaControlPlaneClient {
     };
     this.diagnostics = {
       get: () => this.getDiagnostics(),
+    };
+    this.executionPermissions = {
+      get: (orgId) => this.getExecutionPermissions(orgId),
     };
     this.externalResources = {
       listForProposal: (orgId, proposalId) =>
@@ -208,6 +221,12 @@ class DefaultIsoniaControlPlaneClient implements IsoniaControlPlaneClient {
 
   getPolicies(orgId: string): Promise<OrganizationPoliciesDto> {
     return this.get(controlPlanePaths.policies(orgId));
+  }
+
+  getExecutionPermissions(
+    orgId: string | number,
+  ): Promise<OrganizationExecutionPermissionsDto> {
+    return this.get(controlPlanePaths.organizationExecutionPermissions(orgId));
   }
 
   getDecisionRecords(orgId: string): Promise<DecisionRecordDto[]> {
